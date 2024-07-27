@@ -1,6 +1,5 @@
 
-
-frappe.query_reports["Customer Balances Custom"] = {
+frappe.query_reports["ustomer Balances Custom"] = {
 	"filters": [
 		{
 			"fieldname":"company",
@@ -141,9 +140,9 @@ frappe.query_reports["Customer Balances Custom"] = {
 	],
 
 	onload: function(report) {
-		report.page.add_inner_button(__("Customer Balances Detail Custom"), function() {
+		report.page.add_inner_button(__("Accounts Receivable"), function() {
 			var filters = report.get_values();
-			frappe.set_route('query-report', 'Customer Balances Detail Custom', { company: filters.company });
+			frappe.set_route('query-report', 'Accounts Receivable', { company: filters.company });
 		});
 	}
 }

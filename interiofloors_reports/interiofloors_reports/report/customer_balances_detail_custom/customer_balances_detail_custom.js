@@ -1,5 +1,4 @@
 
-
 frappe.provide("erpnext.utils");
 
 frappe.query_reports["Customer Balances Detail Custom"] = {
@@ -184,9 +183,9 @@ frappe.query_reports["Customer Balances Detail Custom"] = {
 	},
 
 	onload: function(report) {
-		report.page.add_inner_button(__("Customer Balances Custom"), function() {
+		report.page.add_inner_button(__("Accounts Receivable Summary"), function() {
 			var filters = report.get_values();
-			frappe.set_route('query-report', 'Customer Balances Custom', {company: filters.company});
+			frappe.set_route('query-report', 'Accounts Receivable Summary', {company: filters.company});
 		});
 	}
 }

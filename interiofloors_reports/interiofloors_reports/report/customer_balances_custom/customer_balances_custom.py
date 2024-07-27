@@ -11,7 +11,6 @@ from erpnext.accounts.report.accounts_receivable.accounts_receivable import Rece
 
 
 def execute(filters=None):
-
 	args = {
 		"account_type": "Receivable",
 		"naming_by": ["Selling Settings", "cust_master_name"],
