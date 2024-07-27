@@ -5,10 +5,42 @@
 import frappe
 from frappe import _, scrub
 from frappe.utils import cint, flt
+from frappe.query_builder.functions import Abs, Date, Sum
 
-from erpnext.accounts.party import get_partywise_advanced_payment_amount
+# from erpnext.accounts.party import get_partywise_advanced_payment_amount
 from erpnext.accounts.report.accounts_receivable.accounts_receivable import ReceivablePayableReport
 
+def get_partywise_advanced_payment_amount(
+	party_type, posting_date=None, future_payment=0, company=None, party=None
+):
+	ple = frappe.qb.DocType("Payment Ledger Entry")
+	query = (
+		frappe.qb.from_(ple)
+		.select(ple.party, Abs(Sum(ple.amount).as_("amount")))
+		.where(
+			(ple.party_type.isin(party_type))
+			& (ple.amount < 0)
+			& (ple.against_voucher_no == ple.voucher_no)
+			& (ple.delinked == 0)
+		)
+		.groupby(ple.party)
+	)
+
+	if posting_date:
+		if future_payment:
+			query = query.where((ple.posting_date <= posting_date) | (Date(ple.creation) <= posting_date))
+		else:
+			query = query.where(ple.posting_date <= posting_date)
+
+	if company:
+		query = query.where(ple.company == company)
+
+	if party:
+		query = query.where(ple.party == party)
+
+	data = query.run()
+	if data:
+		return frappe._dict(data)
 
 def execute(filters=None):
 	args = {
