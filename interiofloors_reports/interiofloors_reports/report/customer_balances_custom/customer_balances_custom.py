@@ -48,8 +48,7 @@ class AccountsReceivableSummary(ReceivablePayableReport):
 				self.party_type,
 				self.filters.report_date,
 				self.filters.show_future_payments,
-				self.filters.company,
-				party=party if party else None,
+				self.filters.company
 			)
 			or {}
 		)
