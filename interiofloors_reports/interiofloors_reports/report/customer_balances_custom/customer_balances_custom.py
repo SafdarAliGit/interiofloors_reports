@@ -49,7 +49,7 @@ class AccountsReceivableSummary(ReceivablePayableReport):
 				self.filters.report_date,
 				self.filters.show_future_payments,
 				self.filters.company,
-				party=party,
+				party=party if party else None,
 			)
 			or {}
 		)
