@@ -1,63 +1,62 @@
 
-
 frappe.query_reports["Customer Balances Custom"] = {
 	"filters": [
 		{
-			"fieldname":"company",
+			"fieldname": "company",
 			"label": __("Company"),
 			"fieldtype": "Link",
 			"options": "Company",
 			"default": frappe.defaults.get_user_default("Company")
 		},
 		{
-			"fieldname":"report_date",
+			"fieldname": "report_date",
 			"label": __("Posting Date"),
 			"fieldtype": "Date",
 			"default": frappe.datetime.get_today()
 		},
 		{
-			"fieldname":"ageing_based_on",
+			"fieldname": "ageing_based_on",
 			"label": __("Ageing Based On"),
 			"fieldtype": "Select",
 			"options": 'Posting Date\nDue Date',
 			"default": "Due Date"
 		},
 		{
-			"fieldname":"range1",
+			"fieldname": "range1",
 			"label": __("Ageing Range 1"),
 			"fieldtype": "Int",
 			"default": "30",
 			"reqd": 1
 		},
 		{
-			"fieldname":"range2",
+			"fieldname": "range2",
 			"label": __("Ageing Range 2"),
 			"fieldtype": "Int",
 			"default": "60",
 			"reqd": 1
 		},
 		{
-			"fieldname":"range3",
+			"fieldname": "range3",
 			"label": __("Ageing Range 3"),
 			"fieldtype": "Int",
 			"default": "90",
 			"reqd": 1
 		},
 		{
-			"fieldname":"range4",
+			"fieldname": "range4",
 			"label": __("Ageing Range 4"),
 			"fieldtype": "Int",
 			"default": "120",
 			"reqd": 1
 		},
 		{
-			"fieldname":"finance_book",
+			"fieldname": "finance_book",
 			"label": __("Finance Book"),
 			"fieldtype": "Link",
 			"options": "Finance Book"
 		},
 		{
-			"fieldname":"cost_center",
+			"fieldname": "cost_center",
 			"label": __("Cost Center"),
 			"fieldtype": "Link",
 			"options": "Cost Center",
@@ -71,20 +70,20 @@ frappe.query_reports["Customer Balances Custom"] = {
 			}
 		},
 		{
-			"fieldname":"party_type",
+			"fieldname": "party_type",
 			"label": __("Party Type"),
 			"fieldtype": "Autocomplete",
 			options: get_party_type_options(),
-			on_change: function() {
+			on_change: function () {
 				frappe.query_report.set_filter_value('party', "");
 				frappe.query_report.toggle_filter_display('customer_group', frappe.query_report.get_filter_value('party_type') !== "Customer");
 			}
 		},
 		{
-			"fieldname":"party",
+			"fieldname": "party",
 			"label": __("Party"),
 			"fieldtype": "MultiSelectList",
-			get_data: function(txt) {
+			get_data: function (txt) {
 				if (!frappe.query_report.filters) return;
 
 				let party_type = frappe.query_report.get_filter_value('party_type');
@@ -94,58 +93,58 @@ frappe.query_reports["Customer Balances Custom"] = {
 			},
 		},
 		{
-			"fieldname":"customer_group",
+			"fieldname": "customer_group",
 			"label": __("Customer Group"),
 			"fieldtype": "Link",
 			"options": "Customer Group"
 		},
 		{
-			"fieldname":"payment_terms_template",
+			"fieldname": "payment_terms_template",
 			"label": __("Payment Terms Template"),
 			"fieldtype": "Link",
 			"options": "Payment Terms Template"
 		},
 		{
-			"fieldname":"territory",
+			"fieldname": "territory",
 			"label": __("Territory"),
 			"fieldtype": "Link",
 			"options": "Territory"
 		},
 		{
-			"fieldname":"sales_partner",
+			"fieldname": "sales_partner",
 			"label": __("Sales Partner"),
 			"fieldtype": "Link",
 			"options": "Sales Partner"
 		},
 		{
-			"fieldname":"sales_person",
+			"fieldname": "sales_person",
 			"label": __("Sales Person"),
 			"fieldtype": "Link",
 			"options": "Sales Person"
 		},
 		{
-			"fieldname":"based_on_payment_terms",
+			"fieldname": "based_on_payment_terms",
 			"label": __("Based On Payment Terms"),
 			"fieldtype": "Check",
 		},
 		{
-			"fieldname":"show_future_payments",
+			"fieldname": "show_future_payments",
 			"label": __("Show Future Payments"),
 			"fieldtype": "Check",
 		},
 		{
-			"fieldname":"show_gl_balance",
+			"fieldname": "show_gl_balance",
 			"label": __("Show GL Balance"),
 			"fieldtype": "Check",
 		},
 	],
 
-	onload: function(report) {
-		report.page.add_inner_button(__("Accounts Receivable"), function() {
-			var filters = report.get_values();
-			frappe.set_route('query-report', 'Accounts Receivable', { company: filters.company });
-		});
-	}
+	// onload: function (report) {
+	// 	report.page.add_inner_button(__("Accounts Receivable"), function () {
+	// 		var filters = report.get_values();
+	// 		frappe.set_route('query-report', 'Accounts Receivable', {company: filters.company});
+	// 	});
+	// }
 }
 
 erpnext.utils.add_dimensions('Accounts Receivable Summary', 9);
@@ -153,7 +152,7 @@ erpnext.utils.add_dimensions('Accounts Receivable Summary', 9);
 function get_party_type_options() {
 	let options = [];
 	frappe.db.get_list(
-		"Party Type", {filters:{"account_type": "Receivable"}, fields:['name']}
+		"Party Type", {filters: {"account_type": "Receivable"}, fields: ['name']}
 	).then((res) => {
 		res.forEach((party_type) => {
 			options.push(party_type.name);
