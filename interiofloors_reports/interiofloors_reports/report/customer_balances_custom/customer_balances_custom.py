@@ -7,7 +7,7 @@ from frappe import _, scrub
 from frappe.utils import cint, flt
 
 from erpnext.accounts.party import get_partywise_advanced_payment_amount
-from erpnext.accounts.report.accounts_receivable.accounts_receivable import ReceivablePayableReport
+from interiofloors_reports.interiofloors_reports.report.customer_balances_custom.util import ReceivablePayableReport
 
 
 def execute(filters=None):
