@@ -1,5 +1,6 @@
 
-frappe.query_reports["ustomer Balances Custom"] = {
+
+frappe.query_reports["Customer Balances Custom"] = {
 	"filters": [
 		{
 			"fieldname":"company",
