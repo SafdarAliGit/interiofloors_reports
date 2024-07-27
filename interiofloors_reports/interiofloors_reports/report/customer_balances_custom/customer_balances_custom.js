@@ -148,7 +148,7 @@ frappe.query_reports["Customer Balances Custom"] = {
 	}
 }
 
-erpnext.utils.add_dimensions('Customer Balances Detail Custom', 9);
+erpnext.utils.add_dimensions('Accounts Receivable Summary', 9);
 
 function get_party_type_options() {
 	let options = [];
