@@ -1,0 +1,48 @@
+{
+ "add_total_row": 1,
+ "columns": [],
+ "creation": "2024-07-27 08:05:15.607919",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "letter_head": "IF Letter Head",
+ "modified": "2024-07-27 08:05:15.607919",
+ "modified_by": "Administrator",
+ "module": "Interiofloors Reports",
+ "name": "Customer Balances Detail Custom",
+ "owner": "Administrator",
+ "prepared_report": 1,
+ "ref_doctype": "Sales Invoice",
+ "report_name": "Customer Balances Detail Custom",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "Accounts Manager"
+  },
+  {
+   "role": "Accounts User"
+  },
+  {
+   "role": "Waleed & Wasim"
+  },
+  {
+   "role": "Employee Self Service"
+  },
+  {
+   "role": "Selling User"
+  },
+  {
+   "role": "Sales Manager"
+  },
+  {
+   "role": "Zahid Roles"
+  },
+  {
+   "role": "Waleed & Wasim"
+  }
+ ]
+}
