@@ -142,17 +142,17 @@ class AccountsReceivableSummary(ReceivablePayableReport):
 		if self.party_naming_by == "Naming Series":
 			self.add_column(_("{0} Name").format(self.party_type), fieldname="party_name", fieldtype="Data")
 
-		credit_debit_label = "Credit Note" if self.party_type == "Customer" else "Debit Note"
+		# credit_debit_label = "Credit Note" if self.party_type == "Customer" else "Debit Note"
 
-		self.add_column(_("Advance Amount"), fieldname="advance")
-		self.add_column(_("Invoiced Amount"), fieldname="invoiced")
-		self.add_column(_("Paid Amount"), fieldname="paid")
-		self.add_column(_(credit_debit_label), fieldname="credit_note")
-		self.add_column(_("Outstanding Amount"), fieldname="outstanding")
+		# self.add_column(_("Advance Amount"), fieldname="advance")
+		# self.add_column(_("Invoiced Amount"), fieldname="invoiced")
+		# self.add_column(_("Paid Amount"), fieldname="paid")
+		# self.add_column(_(credit_debit_label), fieldname="credit_note")
+		# self.add_column(_("Outstanding Amount"), fieldname="outstanding")
 
-		if self.filters.show_gl_balance:
-			self.add_column(_("GL Balance"), fieldname="gl_balance")
-			self.add_column(_("Difference"), fieldname="diff")
+		# if self.filters.show_gl_balance:
+		# 	self.add_column(_("GL Balance"), fieldname="gl_balance")
+		# 	self.add_column(_("Difference"), fieldname="diff")
 
 		self.setup_ageing_columns()
 
@@ -166,11 +166,11 @@ class AccountsReceivableSummary(ReceivablePayableReport):
 				fieldtype="Link",
 				options="Customer Group",
 			)
-			if self.filters.show_sales_person:
-				self.add_column(label=_("Sales Person"), fieldname="sales_person", fieldtype="Data")
+			# if self.filters.show_sales_person:
+			# 	self.add_column(label=_("Sales Person"), fieldname="sales_person", fieldtype="Data")
 
-			if self.filters.sales_partner:
-				self.add_column(label=_("Sales Partner"), fieldname="default_sales_partner", fieldtype="Data")
+			# if self.filters.sales_partner:
+			# 	self.add_column(label=_("Sales Partner"), fieldname="default_sales_partner", fieldtype="Data")
 
 		else:
 			self.add_column(
