@@ -11,6 +11,11 @@ from erpnext.accounts.report.accounts_receivable.accounts_receivable import Rece
 
 
 def execute(filters=None):
+	filters["range1"] = 30
+	filters["range2"] = 60
+	filters["range3"] = 90
+	filters["range4"] = 120
+	filters["ageing_based_on"] = "Due Date"
 	args = {
 		"party_type": "Customer",
 		"naming_by": ["Selling Settings", "cust_master_name"],
