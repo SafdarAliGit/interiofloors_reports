@@ -139,12 +139,12 @@ frappe.query_reports["Customer Balances Custom"] = {
 		},
 	],
 
-	// onload: function (report) {
-	// 	report.page.add_inner_button(__("Accounts Receivable"), function () {
-	// 		var filters = report.get_values();
-	// 		frappe.set_route('query-report', 'Accounts Receivable', {company: filters.company});
-	// 	});
-	// }
+	onload: function (report) {
+		report.page.add_inner_button(__("Accounts Receivable Details"), function () {
+			var filters = report.get_values();
+			frappe.set_route('query-report', 'Customer Balances Detail Custom', {company: filters.company});
+		});
+	}
 }
 
 erpnext.utils.add_dimensions('Accounts Receivable Summary', 9);

@@ -141,9 +141,9 @@ frappe.query_reports["Customer Balances Detail Custom"] = {
     ],
 
     onload: function (report) {
-        report.page.add_inner_button(__("Accounts Receivable"), function () {
+        report.page.add_inner_button(__("Customer Balances Custom"), function () {
             var filters = report.get_values();
-            frappe.set_route('query-report', 'Accounts Receivable', {company: filters.company});
+            frappe.set_route('query-report', 'Customer Balances Custom', {company: filters.company});
         });
     }
 }
