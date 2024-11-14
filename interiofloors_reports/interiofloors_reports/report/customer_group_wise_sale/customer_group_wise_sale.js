@@ -37,6 +37,12 @@ frappe.query_reports["Customer Group-wise Sale"] = {
             fieldtype: "Date",
             default: frappe.datetime.month_end(),
             reqd: 1
-        }
+        },
+        {
+            "fieldname": "account_manager",
+            "fieldtype": "Link",
+            "label": "Account Manager",
+            "options": "User"
+        },
     ]
 };

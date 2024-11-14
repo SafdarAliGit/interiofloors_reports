@@ -32,6 +32,9 @@ def get_data(filters):
     if filters.get("territory"):
         conditions.append("si.territory = %(territory)s")
 
+    if filters.get("account_manager"):
+        conditions.append("customer.account_manager = %(account_manager)s")
+
     where_clause = " AND ".join(conditions) if conditions else "1=1"
 
     data = frappe.db.sql(f"""
@@ -44,6 +47,8 @@ def get_data(filters):
             `tabSales Invoice` si
         JOIN
             `tabSales Invoice Item` si_item ON si.name = si_item.parent
+        JOIN
+            `tabCustomer` customer ON si.customer = customer.name
         WHERE
             si.docstatus = 1 AND {where_clause}
         GROUP BY
