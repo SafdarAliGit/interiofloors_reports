@@ -1,11 +1,10 @@
 import frappe
 from frappe import _
 
-# Define the item groups you want to include in the report
 ALLOWED_ITEM_GROUPS = [
     "Laminate Floors",
     "HydroCore+ SPC Floor",
-    "Rinovo Panels (4.5\"x9.5\")",
+    "Rinovo Panels (4.5x9.5)",
     "Rinovo PVC Skirting",
     "FlexiStone (Marble Sheet)",
     "FlexiRock (PU Stone)"
@@ -18,6 +17,7 @@ def execute(filters=None):
 
 def get_columns():
     return [
+        {"label": _("Customer Name"), "fieldname": "customer_name", "fieldtype": "Data", "width": 250},
         {"label": _("Customer Group"), "fieldname": "customer_group", "fieldtype": "Data", "width": 250},
         {"label": _("Account Manager"), "fieldname": "account_manager", "fieldtype": "Data", "width": 220},
         {"label": _("Item Group"), "fieldname": "item_group", "fieldtype": "Data", "width": 220},
@@ -28,15 +28,28 @@ def get_columns():
 def get_data(filters):
     conditions = []
 
-    # Apply filter for allowed item groups
-    conditions.append("si_item.item_group IN %(allowed_item_groups)s")
-    filters["allowed_item_groups"] = ALLOWED_ITEM_GROUPS
+    if filters.get("item_group"):
+        child_item_groups = get_all_child_item_groups(filters["item_group"])
+
+        if not child_item_groups:
+            child_item_groups = [filters["item_group"]]
+
+        if child_item_groups:
+            formatted_item_groups = "', '".join(child_item_groups)
+            conditions.append(f"si_item.item_group IN ('{formatted_item_groups}')")
+
+    else:
+        conditions.append("si_item.item_group IN %(allowed_item_groups)s")
+        filters["allowed_item_groups"] = ALLOWED_ITEM_GROUPS
 
     if filters.get("from_date") and filters.get("to_date"):
         conditions.append("si.posting_date BETWEEN %(from_date)s AND %(to_date)s")
 
     if filters.get("customer_group"):
         conditions.append("si.customer_group = %(customer_group)s")
+
+    if filters.get("customer_name"):
+        conditions.append("si.customer_name = %(customer_name)s")
 
     if filters.get("territory"):
         conditions.append("si.territory = %(territory)s")
@@ -48,12 +61,12 @@ def get_data(filters):
 
     data = frappe.db.sql(f"""
         SELECT
+            si.customer_name AS customer_name,    
             si.customer_group AS customer_group,
             si_item.item_group AS item_group,
             SUM(si_item.qty) AS quantity_sold,
             SUM(si_item.amount) AS total_amount,
             customer.account_manager AS account_manager
-
         FROM
             `tabSales Invoice` si
         JOIN
@@ -72,8 +85,16 @@ def get_data(filters):
 
 def get_all_child_item_groups(item_group):
     """Recursively get all child item groups for a selected parent group."""
-    child_groups = frappe.db.get_all("Item Group", filters={"parent_item_group": item_group}, pluck="name")
-    all_groups = child_groups[:]
+    all_groups = set()
+
+    child_groups = frappe.db.get_all(
+        "Item Group",
+        filters={"parent_item_group": item_group},
+        pluck="name"
+    )
+
     for group in child_groups:
-        all_groups.extend(get_all_child_item_groups(group))
-    return all_groups
+        all_groups.add(group)
+        all_groups.update(get_all_child_item_groups(group))
+
+    return list(all_groups)

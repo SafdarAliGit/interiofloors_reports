@@ -11,6 +11,13 @@ frappe.query_reports["Sale Performance Report"] = {
             reqd: 0
         },
         {
+            label: __("Customer Name"),
+            fieldname: "customer_name",
+            fieldtype: "Link",
+            options: "Customer",
+            reqd: 0
+        },
+        {
             label: __("Customer Group"),
             fieldname: "customer_group",
             fieldtype: "Link",
